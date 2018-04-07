@@ -8,11 +8,11 @@
 		<properties>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/JSFDB?createDatabaseIfNotExist=true" />
-			<property name="javax.persistence.jdbc.user" value="root" />
+			<property name="javax.persistence.jdbc.user" value="jsfapp" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<!-- <property name="hibernate.dialect" value="org.hibernate.dialect.MariaDBDialect" /> -->
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<property name="hibernate.hbm2ddl.auto" value="create" />
 			<property name="hibernate.show_sql" value="true" />
 		</properties>
 	</persistence-unit>

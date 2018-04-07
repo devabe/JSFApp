@@ -77,4 +77,14 @@ public class PersonFacade implements Serializable {
 		language.getPersons().remove(person);
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
+	
+	public Person isValidLogin(String login, String password) {
+		Person person = personDAO.findPersonByLogin(login);
+
+		if (person == null || !person.getPassword().equals(password)) {
+			return null;
+		}
+
+		return person;
+	}
 }
