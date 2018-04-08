@@ -1,12 +1,14 @@
 package ch.gibm.bean;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
+import ch.gibm.dao.EntityManagerHelper;
 import ch.gibm.entity.User;
 import ch.gibm.facade.UserFacade;
 
@@ -32,9 +34,27 @@ public class UserMB extends AbstractBean implements Serializable {
 			keepDialogOpen();
 			displayErrorMessageToUser("A problem occurred while saving : " + e.getMessage());
 			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
 		}
 		
 		return "/pages/public/login.xhtml";
+	}
+	
+	public void updateUser() {
+		try {
+			if(user.getPassword() == null || user.getPassword().trim().equals("")) {
+				user.setPassword(new String(Base64.getDecoder().decode(getUserFacade().findUser(user.getId()).getPassword())));
+			}
+			getUserFacade().updateUser(user);
+			displayInfoMessageToUser("Updated With Sucess");
+
+		} catch (Exception e) {
+			displayErrorMessageToUser("Ops, we could not create. Error " + e.getMessage());
+			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
+		}
 	}
 	
 	private void resetUser() {

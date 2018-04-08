@@ -33,7 +33,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 	private List<Person> persons;
 	private PersonFacade personFacade;
 
-	public String createPerson() {
+	public void createPerson() {
 		try {
 			getPersonFacade().createPerson(person);
 			closeDialog();
@@ -46,7 +46,6 @@ public class PersonBean extends AbstractBean implements Serializable {
 			e.printStackTrace();
 		}
 		
-		return "/pages/public/login.xhtml";
 	}
 
 	public void updatePerson() {

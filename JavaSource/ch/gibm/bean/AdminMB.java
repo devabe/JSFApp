@@ -8,6 +8,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import ch.gibm.dao.EntityManagerHelper;
 import ch.gibm.entity.Role;
 import ch.gibm.entity.User;
 import ch.gibm.facade.UserFacade;
@@ -61,6 +62,8 @@ public class AdminMB extends AbstractBean implements Serializable {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, we could not create. Try again later");
 			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
 		}
 	}
 	
@@ -78,6 +81,8 @@ public class AdminMB extends AbstractBean implements Serializable {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, we could not create. Try again later");
 			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
 		}
 	}
 	
@@ -92,6 +97,8 @@ public class AdminMB extends AbstractBean implements Serializable {
 			keepDialogOpen();
 			displayErrorMessageToUser("Ops, we could not create. Try again later");
 			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
 		}
 	}
 

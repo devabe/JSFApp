@@ -1,34 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html"
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 </h:head>
 <h:body>
-<center>
-	<p>#{bundle.registerHello}</p>
-	<h:form>
-		<p:growl showDetail="false" life="3000" />
-		<h:panelGrid columns="2">
-			<h:outputLabel value="#{bundle.loginUserName}" />
-			<h:inputText value="#{userMB.user.login}" label="Login" id="login" required="true">
-				<f:validateLength minimum="4" />
-			</h:inputText>
-			
-			<h:outputLabel value="#{bundle.personName}" />
-			<h:inputText value="#{userMB.user.name}" label="Name" id="name" required="true">
-				<f:validateLength minimum="4" />
-			</h:inputText>
-			
-			<h:outputLabel value="#{bundle.loginPassword}" />
-			<h:inputSecret value="#{userMB.user.password}" label="Password" id="senha" required="true" autocomplete="off" >
-				<f:validateLength minimum="4" />
-			</h:inputSecret>
-			
-			
-		</h:panelGrid>
-		<p:commandButton action="#{userMB.createUser}" value="Register" ajax="false" />
-	</h:form>
-</center>
+	<center>
+		<p>#{bundle.registerHello}</p>
+		<h:form>
+			<p:growl showDetail="false" life="3000" />
+			<h:panelGrid columns="2">
+				<h:outputLabel value="#{bundle.loginUserName}" />
+				<h:inputText value="#{userMB.user.login}" label="Login" id="login"
+					required="true">
+					<f:validateLength minimum="4" />
+				</h:inputText>
+
+				<h:outputLabel value="#{bundle.personName}" />
+				<h:inputText value="#{userMB.user.name}" label="Name" id="name"
+					required="true">
+					<f:validateLength minimum="4" />
+				</h:inputText>
+
+				<h:outputLabel value="#{bundle.loginPassword}" />
+				<h:inputSecret value="#{userMB.user.password}" label="Password"
+					id="senha" required="true" autocomplete="off">
+					<f:validateLength minimum="4" />
+				</h:inputSecret>
+
+
+			</h:panelGrid>
+			<p:commandButton action="#{userMB.createUser}" value="Register"
+				ajax="false" />
+			<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true" immediate="true"
+				action="/pages/public/login.xhtml?faces-redirect=true"
+				value="#{bundle.cancel}" ajax="false" style="font-size: 12px" />
+		</h:form>
+	</center>
 </h:body>
 </html>

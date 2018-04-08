@@ -15,8 +15,14 @@
 		<div id="divLogout">
 			<h:form>
 				Connected as <b>#{userMB.user.name}</b>
+				&nbsp;
 				<p:commandButton value="#{bundle.logout}" action="#{userMB.logOut}" ajax="false" style="font-size: 12px" />
-				<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true" action="/pages/protected/admin/adminIndex.xhtml?faces-redirect=true" value="#{bundle.admin}" ajax="false" style="font-size: 12px" />
+				&nbsp;
+				<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true" action="/pages/protected/user/userProfile.xhtml?faces-redirect=true" 
+						value="#{bundle.userProfile}" ajax="false" style="font-size: 12px" />
+				&nbsp;
+				<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true" action="/pages/protected/admin/adminIndex.xhtml?faces-redirect=true" 
+						value="#{bundle.admin}" ajax="false" style="font-size: 12px" />
 			
 			</h:form>
 		</div>

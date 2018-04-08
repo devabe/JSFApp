@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition template="/pages/protected/templates/master.xhtml">
+		<ui:define name="divMain">
+			<h:form id="userProfileForm">
+				<h:panelGrid columns="2">
+
+					<h:outputText value="#{bundle.loginUserName}" />
+					<h:outputText value="#{userMB.user.login}" required="true"
+						label="#{bundle.loginUserName}" />
+
+					<h:outputText value="#{bundle.loginPassword}" />
+					<h:inputSecret value="#{userMB.user.password}" label="#{bundle.loginPassword}" />
+						
+					<h:outputText value="#{bundle.personName}" />
+					<h:inputText value="#{userMB.user.name}" required="true" label="#{bundle.personName}" />
+
+					<h:outputText value="#{bundle.userRole}" />
+					<h:outputText value="#{userMB.user.role}" />
+
+					<p:commandButton value="#{bundle.update}" icon="ui-icon-plus" ajax="false"
+						action="#{userMB.updateUser}" />
+
+					<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true"
+						action="/pages/protected/index.xhtml?faces-redirect=true"
+						value="#{bundle.cancel}" ajax="false" style="font-size: 12px" />
+				</h:panelGrid>
+			</h:form>
+		</ui:define>
+	</ui:composition>
+</h:body>
+</html>
