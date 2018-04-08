@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="userUpdateDialogWidget"
+		id="userUpdateDialogId" height="150" width="500" modal="true"
+		closable="true" draggable="false" resizable="false">
+		<h:form id="userUpdateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+			
+				<h:outputText value="* #{bundle.personName}" />
+				<h:inputText value="#{adminMB.user.name}" required="true" label="#{bundle.personName}">
+					<f:validateLength minimum="4" />
+				</h:inputText>
+
+				<h:outputText value="* #{bundle.loginUserName}" />
+				<h:inputText value="#{adminMB.user.login}" required="true"
+					label="#{bundle.loginUserName}" />
+
+				<h:outputText value="* #{bundle.loginPassword}" />
+				<h:inputSecret value="#{adminMB.user.password}"
+					label="#{bundle.loginPassword}" />
+					
+				<h:outputText value="* #{bundle.userRole}" />
+				<h:selectOneMenu id="roleUpdateSelect" required="true" value="#{adminMB.user.role}">
+					<f:selectItems value="#{adminMB.roles}" />
+				</h:selectOneMenu>		
+		
+				<p:commandButton value="#{bundle.update}" icon="ui-icon-plus"
+					action="#{adminMB.updateUser}"
+					update=":messageGrowl :usersForm:usersTable"
+					oncomplete="closeDialogIfSucess(xhr, status, args, PF('userUpdateDialogWidget'), 'userUpdateDialogId')" />
+					
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{adminMB.resetUser}"
+					onclick="PF('userUpdateDialogWidget').hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

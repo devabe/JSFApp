@@ -6,8 +6,8 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 
-import ch.gibm.entity.Person;
-import ch.gibm.facade.PersonFacade;
+import ch.gibm.entity.User;
+import ch.gibm.facade.UserFacade;
 
 @RequestScoped
 @ManagedBean
@@ -38,15 +38,15 @@ public class LoginMB extends AbstractBean {
 	}
 
 	public String login() {
-		PersonFacade personFacade = new PersonFacade();
+		UserFacade userFacade = new UserFacade();
 
-		Person person = personFacade.isValidLogin(login, password);
+		User user = userFacade.isValidLogin(login, password);
 		
-		if(person != null){
-			userMB.setPerson(person);
+		if(user != null){
+			userMB.setUser(user);
 			FacesContext context = FacesContext.getCurrentInstance();
 			HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-			request.getSession().setAttribute("person", person);
+			request.getSession().setAttribute("user", user);
 			return "/pages/protected/index.xhtml";
 		}
 

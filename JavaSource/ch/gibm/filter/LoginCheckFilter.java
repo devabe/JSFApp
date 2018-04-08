@@ -13,7 +13,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import ch.gibm.entity.Person;
+import ch.gibm.entity.User;
 
 
 /**
@@ -43,6 +43,8 @@ public class LoginCheckFilter extends AbstractFilter implements Filter {
 			allowedURIs.add("/JSFApp/javax.faces.resource/jquery/jquery-plugins.js.xhtml");
 			allowedURIs.add("/JSFApp/javax.faces.resource/components.js.xhtml");
 			allowedURIs.add("/JSFApp/javax.faces.resource/core.js.xhtml");
+			allowedURIs.add("/JSFApp/pages/public/register.xhtml");
+			allowedURIs.add("/JSFApp/pages/public/accessDenied.xhtml");
 		}
 	}
 
@@ -64,9 +66,9 @@ public class LoginCheckFilter extends AbstractFilter implements Filter {
 			return;
 		}
 
-		Person person = (Person) session.getAttribute("person");
+		User user = (User) session.getAttribute("user");
 
-		if (person == null && !allowedURIs.contains(req.getRequestURI())) {
+		if (user == null && !allowedURIs.contains(req.getRequestURI())) {
 			System.out.println(req.getRequestURI());
 			doLogin(request, response, req);
 			return;

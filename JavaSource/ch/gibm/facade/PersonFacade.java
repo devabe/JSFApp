@@ -3,8 +3,6 @@ package ch.gibm.facade;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-
 import ch.gibm.dao.EntityManagerHelper;
 import ch.gibm.dao.LanguageDAO;
 import ch.gibm.dao.PersonDAO;
@@ -78,13 +76,4 @@ public class PersonFacade implements Serializable {
 		EntityManagerHelper.commitAndCloseTransaction();
 	}
 	
-	public Person isValidLogin(String login, String password) {
-		Person person = personDAO.findPersonByLogin(login);
-
-		if (person == null || !person.getPassword().equals(password)) {
-			return null;
-		}
-
-		return person;
-	}
 }

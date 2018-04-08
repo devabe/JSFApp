@@ -3,8 +3,6 @@ package ch.gibm.dao;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.model.User;
-
 import ch.gibm.entity.Person;
 
 public class PersonDAO extends GenericDAO<Person> {
@@ -26,10 +24,4 @@ public class PersonDAO extends GenericDAO<Person> {
         	super.delete(person.getId(), Person.class);
 	}
 	
-    public Person findPersonByLogin(String login){
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        parameters.put("login", login);     
- 
-        return super.findOneResult(Person.FIND_PERSON_BY_LOGIN, parameters);
-    }
 }

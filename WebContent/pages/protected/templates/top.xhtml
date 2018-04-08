@@ -2,18 +2,24 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
-   <h:body>   
-     <ui:composition>
-     	<div id="topMessage">
-     		<h2>
-     			<h:form>
-		     		Welcome to JSF
-     			</h:form>
-     		</h2>
-     	</div>
-     </ui:composition>   
-   </h:body>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<ui:composition>
+
+		<div id="topMessage">
+			<h2>Welcome to JSF</h2>
+		</div>
+
+		<div id="divLogout">
+			<h:form>
+				Connected as <b>#{userMB.user.name}</b>
+				<p:commandButton value="#{bundle.logout}" action="#{userMB.logOut}" ajax="false" style="font-size: 12px" />
+				<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true" action="/pages/protected/admin/adminIndex.xhtml?faces-redirect=true" value="#{bundle.admin}" ajax="false" style="font-size: 12px" />
+			
+			</h:form>
+		</div>
+	</ui:composition>
+</h:body>
 </html>

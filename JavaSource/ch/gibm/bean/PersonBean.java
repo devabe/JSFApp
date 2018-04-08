@@ -33,7 +33,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 	private List<Person> persons;
 	private PersonFacade personFacade;
 
-	public void createPerson() {
+	public String createPerson() {
 		try {
 			getPersonFacade().createPerson(person);
 			closeDialog();
@@ -45,6 +45,8 @@ public class PersonBean extends AbstractBean implements Serializable {
 			displayErrorMessageToUser("A problem occurred while saving. Try again later");
 			e.printStackTrace();
 		}
+		
+		return "/pages/public/login.xhtml";
 	}
 
 	public void updatePerson() {
@@ -131,7 +133,7 @@ public class PersonBean extends AbstractBean implements Serializable {
 
 	public String editPersonLanguages() {
 		ELFlash.getFlash().put(SELECTED_PERSON, person);
-		return "/pages/public/person/personLanguages/personLanguages.xhtml";
+		return "/pages/protected/person/personLanguages/personLanguages.xhtml";
 	}
 
 	public PersonFacade getPersonFacade() {

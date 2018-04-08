@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import ch.gibm.entity.Person;
+import ch.gibm.entity.User;
 
 public class DefaultUserPagesFilter extends AbstractFilter implements Filter {
 
@@ -22,9 +22,9 @@ public class DefaultUserPagesFilter extends AbstractFilter implements Filter {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
-		Person person = (Person) req.getSession(true).getAttribute("person");
+		User user = (User) req.getSession(true).getAttribute("user");
 
-		if(!person.isUser() && !person.isAdmin()){
+		if(!user.isUser() && !user.isAdmin()){
 			accessDenied(request, response, req);
 			return;
 		}

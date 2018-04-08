@@ -1,5 +1,11 @@
 #topMessage {
 	vertical-align: middle;
+	float: left;
+}
+
+#divLogout {
+	vertical-align: middle;
+	float: right;
 }
 
 html {

@@ -6,25 +6,29 @@
 </h:head>
 <h:body>
 <center>
-	<p>#{bundle.loginHello}</p>
+	<p>#{bundle.registerHello}</p>
 	<h:form>
 		<p:growl showDetail="false" life="3000" />
 		<h:panelGrid columns="2">
 			<h:outputLabel value="#{bundle.loginUserName}" />
-			<h:inputText value="#{loginMB.login}" label="Login" id="login" required="true">
+			<h:inputText value="#{userMB.user.login}" label="Login" id="login" required="true">
 				<f:validateLength minimum="4" />
 			</h:inputText>
-			<h:outputLabel value="#{bundle.loginPassword}" />
 			
-			<h:inputSecret value="#{loginMB.password}" label="Password" id="senha" required="true" autocomplete="off" >
+			<h:outputLabel value="#{bundle.personName}" />
+			<h:inputText value="#{userMB.user.name}" label="Name" id="name" required="true">
+				<f:validateLength minimum="4" />
+			</h:inputText>
+			
+			<h:outputLabel value="#{bundle.loginPassword}" />
+			<h:inputSecret value="#{userMB.user.password}" label="Password" id="senha" required="true" autocomplete="off" >
 				<f:validateLength minimum="4" />
 			</h:inputSecret>
 			
 			
 		</h:panelGrid>
-		<p:commandButton action="#{loginMB.login}" value="Log in" ajax="false" />
+		<p:commandButton action="#{userMB.createUser}" value="Register" ajax="false" />
 	</h:form>
-	<a href="pages/public/register.xhtml">#{bundle.registerLink}</a>
 </center>
 </h:body>
 </html>
