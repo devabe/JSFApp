@@ -13,7 +13,7 @@
 				<h:outputText value="#{bundle.loginPassword}" />
 				<h:outputText value="#{adminMB.user.password}" />
 				<h:outputText value="#{bundle.userRole}" />
-				<h:outputText value="#{adminMB.user.role}" />
+				<h:outputText value="#{adminMB.user.role.name}" />
 
 				<p:commandButton value="#{bundle.ok}" icon="ui-icon-arrow-1-w" actionListener="#{adminMB.resetUser}"
 					onclick="PF('userDetailDialogWidget').hide();" />

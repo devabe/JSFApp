@@ -4,63 +4,14 @@
 <h:body>
 	<ui:composition template="/pages/protected/templates/master.xhtml">
 		<ui:define name="divMain">
-			<h:form id="usersForm">
-				<p:dataTable id="usersTable" value="#{adminMB.allUsers}" var="user" emptyMessage="#{bundle.noRecords}" paginator="true" rows="10"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="5,10,15">
-					
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{bundle.personName}" />
-						</f:facet>
-
-						<h:outputText value="#{user.name}" />
-					</p:column>
-
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{bundle.loginUserName}" />
-						</f:facet>
-
-						<h:outputText value="#{user.login}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{bundle.loginPassword}" />
-						</f:facet>
-
-						<h:outputText value="#{user.password}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="#{bundle.userRole}" />
-						</f:facet>
-
-						<h:outputText value="#{user.role}" />
-					</p:column>				
-					<p:column>
-						<p:commandButton value="#{bundle.detail}" icon="ui-icon-bullet" onclick="PF('userDetailDialogWidget').show();" update=":userDetailDialogForm">
-							<f:setPropertyActionListener target="#{adminMB.user}" value="#{user}" />
-						</p:commandButton> 
-						<p:spacer width="10px" />
-						<p:commandButton value="#{bundle.update}" icon="ui-icon-pencil" update=":userUpdateDialogForm" onclick="PF('userUpdateDialogWidget').show();">
-							<f:setPropertyActionListener target="#{adminMB.user}" value="#{user}" />
-						</p:commandButton>
-						<p:spacer width="10px" />
-						<p:commandButton value="#{bundle.delete}" icon="ui-icon-trash" update=":userDeleteDialogForm" onclick="PF('userDeleteDialogWidget').show();">
-							<f:setPropertyActionListener target="#{adminMB.user}" value="#{user}" />
-						</p:commandButton>
-					</p:column>
-
-				</p:dataTable>
-				<p:commandButton value="#{bundle.create} #{bundle.user}" icon="ui-icon-plus" update=":userCreateDialogForm"
-					actionListener="#{adminMB.resetUser}" onclick="PF('userCreateDialogWidget').show();" />
+			<h:form>
+				<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true" action="/pages/protected/admin/user/userIndex.xhtml?faces-redirect=true" 
+						value="#{bundle.adminManageUsers}" ajax="false" style="font-size: 12px" />
+				&nbsp;
+				<p:commandButton icon="ui-icon-arrowstop-1-e" rendered="true" action="/pages/protected/admin/role/roleIndex.xhtml?faces-redirect=true" 
+						value="#{bundle.adminManageRoles}" ajax="false" style="font-size: 12px" />
+				&nbsp;
 			</h:form>
-
-			<ui:include src="dialogs/userCreateDialog.xhtml" />
-			<ui:include src="dialogs/userDetailDialog.xhtml" />
-			<ui:include src="dialogs/userUpdateDialog.xhtml" />
-			<ui:include src="dialogs/userDeleteDialog.xhtml" />
 		</ui:define>
 	</ui:composition>
 </h:body>

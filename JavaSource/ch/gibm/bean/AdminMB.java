@@ -1,9 +1,9 @@
 package ch.gibm.bean;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -11,6 +11,7 @@ import javax.faces.bean.ViewScoped;
 import ch.gibm.dao.EntityManagerHelper;
 import ch.gibm.entity.Role;
 import ch.gibm.entity.User;
+import ch.gibm.facade.RoleFacade;
 import ch.gibm.facade.UserFacade;
 
 @ViewScoped
@@ -19,9 +20,13 @@ public class AdminMB extends AbstractBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private User user;
+	private Role role;
+	private String selectedRole;
 	private List<User> users;
-	private List<String> roles;
+	private List<Role> roles;
+	private List<String> roleNames;
 	private UserFacade userFacade;
+	private RoleFacade roleFacade;
 
 	public UserFacade getUserFacade() {
 		if (userFacade == null) {
@@ -29,6 +34,27 @@ public class AdminMB extends AbstractBean implements Serializable {
 		}
 
 		return userFacade;
+	}	
+	
+	public RoleFacade getRoleFacade() {
+		if (roleFacade == null) {
+			roleFacade = new RoleFacade();
+		}
+
+		return roleFacade;
+	}
+
+	
+	public Role getRole() {
+		if (role == null) {
+			role = new Role();
+		}
+
+		return role;
+	}	
+	
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 	public User getUser() {
@@ -39,10 +65,34 @@ public class AdminMB extends AbstractBean implements Serializable {
 		return user;
 	}
 	
-	@SuppressWarnings("serial")
-	public List<String> getRoles() {
+	public String getSelectedRole() {
+		if(selectedRole == null) {
+			getRoleNames();
+			selectedRole = roleNames.iterator().next();
+		}
+		return selectedRole;
+	}
+	
+	
+	public List<String> getRoleNames() {
+		if(roleNames == null) {
+			List<Role> persistedRoles =  getRoleFacade().listAll();
+			roleNames = persistedRoles.stream().map(role -> role.getName()).collect(Collectors.toList());
+		}
+		return roleNames;
+	}
+
+	public void setRoleNames(List<String> roleNames) {
+		this.roleNames = roleNames;
+	}
+
+	public void setSelectedRole(String role) {
+		this.selectedRole = role;
+	}
+	
+	public List<Role> getRoles() {
 		if(roles == null) {
-			roles = new ArrayList<String>() {{add(Role.ADMIN.toString()); add(Role.USER.toString());}};
+			roles =  getRoleFacade().listAll();
 		}
 		return roles;
 	}
@@ -51,8 +101,76 @@ public class AdminMB extends AbstractBean implements Serializable {
 		this.user = user;
 	}
 
+	public void createRole() {
+		try {
+			getRoleFacade().createRole(role);
+			closeDialog();
+			displayInfoMessageToUser("Created With Sucess");
+			loadRoles();
+			resetRole();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Ops, we could not create. Try again later");
+			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
+		}
+	}
+
+	
+	public void updateRole() {
+		try {
+			getRoleFacade().updateRole(role);
+			closeDialog();
+			displayInfoMessageToUser("Updated With Sucess");
+			loadRoles();
+			resetRole();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Ops, we could not create. Try again later");
+			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
+		}
+	}
+	
+	public void deleteRole() {
+		try {
+			getRoleFacade().deleteRole(role);
+			closeDialog();
+			displayInfoMessageToUser("Deleted With Sucess");
+			loadRoles();
+			resetRole();
+		} catch (Exception e) {
+			keepDialogOpen();
+			displayErrorMessageToUser("Ops, we could not create. Try again later");
+			e.printStackTrace();
+			EntityManagerHelper.rollback();
+			EntityManagerHelper.closeEntityManager();
+		}
+	}
+
+	public List<Role> getAllRoles() {
+		if (roles == null) {
+			loadRoles();
+		}
+
+		return roles;
+	}
+
+	private void loadRoles() {
+		roles = getRoleFacade().listAll();
+	}
+
+
+	public void resetRole() {
+		role = new Role();
+	}
+
+	
 	public void createUser() {
 		try {
+			user.setRole(roleFacade.findRole(selectedRole));
 			getUserFacade().createUser(user);
 			closeDialog();
 			displayInfoMessageToUser("Created With Sucess");
@@ -69,6 +187,7 @@ public class AdminMB extends AbstractBean implements Serializable {
 	
 	public void updateUser() {
 		try {
+			user.setRole(roleFacade.findRole(selectedRole));
 			if(user.getPassword() == null || user.getPassword().trim().equals("")) {
 				user.setPassword(new String(Base64.getDecoder().decode(getUserFacade().findUser(user.getId()).getPassword())));
 			}
@@ -116,5 +235,6 @@ public class AdminMB extends AbstractBean implements Serializable {
 
 	public void resetUser() {
 		user = new User();
+		selectedRole = null;
 	}
 }

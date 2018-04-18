@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:body>
+	<p:dialog widgetVar="roleUpdateDialogWidget"
+		id="roleUpdateDialogId" height="150" width="500" modal="true"
+		closable="true" draggable="false" resizable="false">
+		<h:form id="roleUpdateDialogForm" prependId="false">
+			<h:panelGrid columns="2">
+			
+				<h:outputText value="* #{bundle.personName}" />
+				<h:inputText value="#{adminMB.role.name}" required="true" label="#{bundle.personName}">
+					<f:validateLength minimum="4" />
+				</h:inputText>				
+		
+				<p:commandButton value="#{bundle.update}" icon="ui-icon-plus"
+					action="#{adminMB.updateRole}"
+					update=":messageGrowl :rolesForm:rolesTable"
+					oncomplete="closeDialogIfSucess(xhr, status, args, PF('roleUpdateDialogWidget'), 'roleUpdateDialogId')" />
+					
+				<p:commandButton value="#{bundle.cancel}" icon="ui-icon-cancel" actionListener="#{adminMB.resetRole}"
+					onclick="PF('roleUpdateDialogWidget').hide();" type="button" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>

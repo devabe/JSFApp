@@ -4,11 +4,10 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
 @Entity
@@ -17,7 +16,7 @@ public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	public static final String FIND_USER_BY_LOGIN = "User.findUserByLogin";
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -26,8 +25,9 @@ public class User implements Serializable {
 	@Column(unique = true)
 	private String login;
 	private String password;
-	@Enumerated(EnumType.STRING)
-	private Role role = Role.USER;
+
+	@ManyToOne
+	private Role role = new Role();
 
 	public int getId() {
 		return id;
@@ -36,7 +36,7 @@ public class User implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -44,19 +44,19 @@ public class User implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getLogin() {
 		return this.login;
 	}
-	
+
 	public void setLogin(String login) {
 		this.login = login;
 	}
-	
+
 	public String getPassword() {
 		return this.password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
@@ -65,7 +65,7 @@ public class User implements Serializable {
 	public int hashCode() {
 		return id;
 	}
-	
+
 	public Role getRole() {
 		return role;
 	}
@@ -75,11 +75,11 @@ public class User implements Serializable {
 	}
 
 	public boolean isAdmin() {
-		return Role.ADMIN.equals(role);
+		return this.role.getName().equalsIgnoreCase("ADMIN");
 	}
 
 	public boolean isUser() {
-		return Role.USER.equals(role);
+		return this.role.getName().equalsIgnoreCase("USER");
 	}
 
 	@Override

@@ -25,8 +25,8 @@
 					label="#{bundle.loginPassword}" />
 					
 				<h:outputText value="* #{bundle.userRole}" />
-				<h:selectOneMenu id="roleCreateSelect" required="true" value="#{adminMB.user.role}">
-					<f:selectItems value="#{adminMB.roles}" />
+				<h:selectOneMenu id="roleCreateSelect" required="true" value="#{adminMB.selectedRole}">
+					<f:selectItems value="#{adminMB.roleNames}" />
 				</h:selectOneMenu>
 
 				<p:commandButton value="#{bundle.create}" icon="ui-icon-plus"
